@@ -1,105 +1,105 @@
-# Handoff — {{titulo_tarea}}
+# Handoff — {{task_title}}
 
-> Título: una línea que identifique la tarea sin ambigüedad.
-> Ej: "Refactor módulo auth", "Prototipo integración SDK Stripe", "Fix bug paginación"
+> Title: one line that identifies the task unambiguously.
+> Ex: "Refactor auth module", "Prototype Stripe SDK integration", "Fix pagination bug"
 
-**Sesión origen:** {{sesion_origen}}  
-**Propósito:** {{proposito_una_frase}}  
-**Patrón:** {{patron}}
+**Source session:** {{source_session}}  
+**Purpose:** {{purpose_one_sentence}}  
+**Pattern:** {{pattern}}
 
-> Patrón: elige uno:
-> - Delegación pura — la sesión origen no necesita resultados de vuelta
-> - Ida y vuelta — la nueva sesión debe generar un handoff de vuelta con lo aprendido
-
----
-
-## Contexto
-
-> Solo lo que el agente receptor necesita para entender la situación.
-> No copies lo que ya está en otros archivos — usa punteros (ver sección "Archivos relevantes").
-> Responde: ¿de dónde viene esta tarea? ¿qué decisiones o trabajo previo son relevantes?
-> 3-6 líneas suele ser suficiente. Si necesitas más, es señal de que el scope no está claro.
-
-**Último estado conocido:** {{ultimo_estado}}
-
-> Dónde se quedó exactamente la sesión anterior. Qué se intentó, qué falló, dónde está el bloqueo.
-> Ej: "Se intentó levantar el contenedor pero falló el handshake con la BD (ver log en logs/docker.out)"
-> Ej: "El endpoint /refresh devuelve 401 intermitente. Se sospecha condición de carrera en el refresh handler."
-> Esto evita que el nuevo agente tropiece con la misma piedra antes de entender dónde estaba el problema.
+> Pattern: choose one:
+> - Pure delegation — the source session does not need results back
+> - Round trip — the new session should generate a return handoff with what was learned
 
 ---
 
-## Tarea
+## Context
 
-> Qué hay que hacer exactamente. Sé específico: el agente no tiene tu contexto mental.
->
-> Incluye:
-> - Qué se espera como resultado (funcionalidad, archivo, PR, análisis...)
-> - Restricciones técnicas relevantes (versiones, convenciones, dependencias)
-> - Casos edge o condiciones que el agente debe tener en cuenta
->
-> Incluye también lo que NO entra en scope. Esto es tan importante como lo que sí entra:
-> evita que el agente se meta en trabajo que corresponde a otra sesión o tarea.
+> Only what the receiving agent needs to understand the situation.
+> Do not copy what is already in other files — use pointers (see "Relevant files").
+> Answer: where does this task come from? what decisions or prior work are relevant?
+> 3-6 lines are usually enough. If you need more, the scope may not be clear.
 
----
+**Last known state:** {{last_known_state}}
 
-## Archivos relevantes
-
-> Lista de archivos, documentos o recursos que el agente debe leer.
-> No copies su contenido aquí — usa la ruta o el enlace y deja que el agente los lea.
->
-> Ej:
-> - `src/auth/index.ts` — módulo principal a refactorizar
-> - `docs/arquitectura.md` — contexto de la arquitectura actual
-> - github.com/org/repo/issues/42 — issue relacionado
->
-> Si hay recursos que NO debe tocar, indícalo explícitamente.
+> Where the previous session left off exactly. What was attempted, what failed, where is the blocker.
+> Ex: "I attempted to start the container but the DB handshake failed (see log in logs/docker.out)"
+> Ex: "The /refresh endpoint returns intermittent 401. Suspected race condition in the refresh handler."
+> This prevents the new agent from stumbling over the same issue before understanding where the problem was.
 
 ---
 
-## Decisiones ya tomadas
+## Task
 
-> Qué está decidido y no se debe cuestionar en esta sesión.
-> Ahorra al agente tiempo y evita que reabra debates ya cerrados.
+> What exactly needs to be done. Be specific: the agent does not have your mental context.
 >
-> Ej:
-> - Stack: Node.js + TypeScript (sin cambios)
-> - Puerto del nuevo servicio: 3001
-> - Base de datos compartida por ahora, sin cambios de schema
+> Include:
+> - What is expected as a result (feature, file, PR, analysis...)
+> - Relevant technical constraints (versions, conventions, dependencies)
+> - Edge cases or conditions the agent should consider
 >
-> Si no hay nada decidido todavía, elimina esta sección.
+> Also include what is NOT in scope. This is as important as what is in scope:
+> it prevents the agent from doing work that belongs to another session or task.
 
 ---
 
-## Skills sugeridas
+## Relevant files
 
-> Skills que el agente debería invocar al inicio de la sesión.
-> Esto orienta el tono y las convenciones de trabajo desde el principio.
+> List files, documents, or resources the agent should read.
+> Do not copy their contents here — use the path or link and let the agent read them.
 >
-> Ej:
-> - `skill: diagnostics` — para analizar dependencias antes de tocar código
-> - `skill: typescript` — convenciones del proyecto
-> - `skill: bbq` — si la nueva sesión va a ser de planificación
+> Ex:
+> - `src/auth/index.ts` — main module to refactor
+> - `docs/architecture.md` — context for the current architecture
+> - github.com/org/repo/issues/42 — related issue
 >
-> Elimina esta sección si no aplica ninguna.
+> If there are resources that MUST NOT be touched, state that explicitly.
 
 ---
 
-## Output esperado
+## Decisions already made
 
-> Qué debe producir esta sesión cuando termine. Sé concreto.
-> Incluye siempre un criterio de validación: cómo demuestra el agente que ha terminado con éxito.
+> What is decided and should not be questioned in this session.
+> Saves the agent time and prevents reopening closed debates.
 >
-> Ej:
-> - Rama `feat/auth-service` con el servicio extraído
-> - PR abierto contra `main`
-> - Validación: `npm run test:auth` en verde y linter sin errores
+> Ex:
+> - Stack: Node.js + TypeScript (no changes)
+> - New service port: 3001
+> - Shared database for now, no schema changes
 >
-> Para patrón ida y vuelta, especifica que se espera un nuevo handoff.md con:
-> - Lo que funcionó y lo que no
-> - Decisiones tomadas durante el prototipo
-> - Lo que no quedó capturado en el código pero es relevante para la sesión padre
+> If nothing is decided yet, remove this section.
 
 ---
 
-*Generado desde {{sesion_origen}} — guardado en /tmp, desechable*
+## Suggested skills
+
+> Skills the agent should invoke at the start of the session.
+> This orients the tone and working conventions from the beginning.
+>
+> Ex:
+> - `skill: diagnostics` — to analyze dependencies before touching code
+> - `skill: typescript` — project conventions
+> - `skill: bbq` — if the new session is planning-focused
+>
+> Remove this section if it does not apply.
+
+---
+
+## Expected output
+
+> What this session should produce when finished. Be concrete.
+> Always include a validation criterion: how does the agent demonstrate it is done successfully.
+>
+> Ex:
+> - Branch `feat/auth-service` with the extracted service
+> - PR opened against `main`
+> - Validation: `npm run test:auth` green and linter clean
+>
+> For round trip pattern, specify that a new handoff.md is expected with:
+> - What worked and what did not
+> - Decisions made during the prototype
+> - What was not captured in code but is relevant to the parent session
+
+---
+
+*Generated from {{source_session}} — saved in /tmp, disposable*
